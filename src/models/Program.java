@@ -10,6 +10,13 @@ public class Program {
 			throws NoSuchMethodException, SecurityException, 
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException 
 	{
+		// Get current method name
+		String nameofCurrMethod = new Throwable() 
+                .getStackTrace()[0]
+                .getMethodName();
+
+		System.out.println("Name of current method: "
+				+ nameofCurrMethod); 
 		
 		Tester tester = new Tester();
 		tester.runAllTests();

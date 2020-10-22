@@ -7,7 +7,6 @@ public class Tester
 {
 	public Tester()
 	{
-		
 	}
 	
 	public void runAllTests() 
@@ -30,7 +29,6 @@ public class Tester
 		System.out.println("assert Exception called");
 	}
 	
-	@TestMethod
 	public void assertTrue()
 	{
 		System.out.println("assert TRUE called");
