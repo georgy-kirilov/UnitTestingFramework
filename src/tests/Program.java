@@ -1,42 +1,19 @@
-package models;
+package tests;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
+import models.Tester;
 
 public class Program {
 
 	public static void main(String[] args) 
 			throws NoSuchMethodException, SecurityException, 
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException 
-	{
-		// Get current method name
-		String nameofCurrMethod = new Throwable() 
-                .getStackTrace()[0]
-                .getMethodName();
-
-		System.out.println("Name of current method: "
-				+ nameofCurrMethod); 
-		
-		Tester tester = new Tester();
+	{	
+		Tester tester = new SomeTester();
 		tester.runAllTests();
 		
-		/*
-		Method[] methods = Tester.class.getDeclaredMethods();
-		
-		for (Method m : methods)
-		{	
-			Annotation[] annotations = m.getAnnotations();
-			System.out.println(annotations.length);
-			for (Annotation a : annotations)
-			{
-				if (a.annotationType() == TestMethod.class)
-				{
-					m.invoke(tester);					
-				}
-			}
-		}*/
-
+		System.out.println(tester.toString());
 	}
 
 }

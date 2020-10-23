@@ -16,7 +16,7 @@ public class ExceptionValidator
 	{
 		throwIfNull(value, paramName);
 		
-		if (value == "")
+		if (value == GlobalConstants.EMPTY_STRING)
 		{
 			String errorFormat = "%s cannot be empty string";
 			String errorMessage = String.format(errorFormat, paramName);

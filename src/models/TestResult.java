@@ -2,22 +2,25 @@ package models;
 
 import enums.TestStatus;
 import validation.ExceptionValidator;
+import validation.GlobalConstants;
 
 public class TestResult 
 {	
+	public static final String DESCRIPTION_DEFAULT_VALUE = "N/A";
+	
 	private String testName;
 	private TestStatus status;
 	private String description;
 	
 	public TestResult(String testName, TestStatus status)
 	{
-		this.setTestName(testName);
-		this.setStatus(status);
+		this(testName, status, DESCRIPTION_DEFAULT_VALUE);
 	}
 	
 	public TestResult(String testName, TestStatus status, String description)
 	{
-		this(testName, status);
+		this.setTestName(testName);
+		this.setStatus(status);
 		this.setDescription(description);
 	}
 	
@@ -56,12 +59,14 @@ public class TestResult
 	
 	public String toString()
 	{	
-		String result = this.getTestName() + "() -> " + this.getStatus();
+		String tabulationString = "-- ";
+		String separationString = " -> ";
 		
-		String descriptionValue = this.getDescription() == null ? 
-										"N/A" : this.getDescription();
+		String result = tabulationString + this.getTestName() + 
+						separationString + this.getStatus();
 		
-		result += "\n" + "description: " + descriptionValue; 
+		result += separationString + "description: " + 
+				  this.getDescription() + GlobalConstants.NEW_LINE;
 		
 		return result;
 	}
