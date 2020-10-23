@@ -10,6 +10,8 @@ import validation.GlobalConstants;
 
 public abstract class Tester 
 {	
+	private static final String ASSERT_TRUE_METHOD_NAME = "assertTrue";
+	
 	private Method currentlyInvokedTestMethod;
 	
 	private Map<String, ArrayList<TestResult>> testMethodsAndResultsPairs; 
@@ -26,36 +28,63 @@ public abstract class Tester
 	
 	private void setCurrentlyInvokedTestMethod(Method value)
 	{
-		ExceptionValidator.throwIfNull(value, "currentlyInvokedMethod");
+		ExceptionValidator.throwIfNull(value, "currentlyInvokedTestMethod");
 		this.currentlyInvokedTestMethod = value;
 	}
 	
-	protected void assertTrue(boolean value)
+	private String methodName()
 	{
-		String methodName = this.getCurrentlyInvokedTestMethod().getName();
-		boolean exists = this.testMethodsAndResultsPairs.containsKey(methodName);
-		
-		if (!exists)
+		ExceptionValidator.throwIfNull
+			(this.getCurrentlyInvokedTestMethod(), "currentlyInvokedTestMethod");
+	
+		return this.getCurrentlyInvokedTestMethod().getName();
+	}
+	
+	private boolean doesMethodNameExist()
+	{
+		boolean exists = this.testMethodsAndResultsPairs
+							 .containsKey(this.methodName());
+		return exists;
+	}
+	
+	private void ensureMethodNameExists()
+	{
+		if (!this.doesMethodNameExist())
 		{
-			this.testMethodsAndResultsPairs.put(methodName, new ArrayList<TestResult>());
+			this.testMethodsAndResultsPairs
+				.put(this.methodName(), new ArrayList<TestResult>());
 		}
-		
-		TestStatus status = TestStatus.Failed;
-		
-		if (value)
-		{
-			status = TestStatus.Passed;			
-		}
-		
+	}
+	
+	private void addTestResult(String testName, TestStatus status, String description)
+	{
 		this.testMethodsAndResultsPairs
-					.get(methodName)
-					.add(new TestResult("assertTrue", status));
+			.get(this.methodName())
+			.add(new TestResult(ASSERT_TRUE_METHOD_NAME, status, description));
+	}
+	
+	protected void assertTrue(boolean value)
+	{	
+		this.ensureMethodNameExists();
+		
+		TestStatus status = value ? TestStatus.Passed : TestStatus.Failed;
+		
+		this.addTestResult(this.methodName(), status, 
+					TestResult.DESCRIPTION_DEFAULT_VALUE);
+	}
+	
+	protected void assertTrue(boolean value, String description)
+	{
+		this.ensureMethodNameExists();
+		
+		TestStatus status = value ? TestStatus.Passed : TestStatus.Failed;
+		
+		this.addTestResult(this.methodName(), status, description);
 	}
 	
 	public void runAllTests() 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
-		
 		Method[] methods = this.getClass().getDeclaredMethods();
 		
 		for (Method method : methods)

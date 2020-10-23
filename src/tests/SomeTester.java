@@ -18,7 +18,7 @@ public class SomeTester extends Tester
 	{
 		int result = 5 - 5;
 		
-		this.assertTrue(result == 0);
+		this.assertTrue(result == 0, "Result should be 0");
 		this.assertTrue(result == 1);
 	}
 }
