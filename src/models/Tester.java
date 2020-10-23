@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 
 public class Tester 
 {
+	
+	
 	public Tester()
 	{
 	}
@@ -23,13 +25,13 @@ public class Tester
 		}
 	}
 
-	@TestMethod
 	public void assertException()
 	{	
 		System.out.println("assert Exception called");
 	}
 	
-	public void assertTrue()
+
+	protected static void assertTrue()
 	{
 		System.out.println("assert TRUE called");
 	}
