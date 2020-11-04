@@ -62,12 +62,20 @@ public class TestResult
 		String tabulationString = "-- ";
 		String separationString = " -> ";
 		
-		String result = tabulationString + this.getTestName() + 
-						separationString + this.getStatus();
+		StringBuilder result = new StringBuilder();
+		result.append(tabulationString);
+		result.append(this.getTestName());
+		result.append(separationString);
+		result.append(this.getStatus());
 		
-		result += separationString + "description: " + 
-				  this.getDescription() + GlobalConstants.NEW_LINE;
+		if (this.getStatus() == TestStatus.FAILED)
+		{
+			result.append(separationString);
+			result.append(this.getDescription());
+		}
 		
-		return result;
+		result.append(GlobalConstants.NEW_LINE);
+		
+		return result.toString();
 	}
 }

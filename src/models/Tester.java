@@ -67,7 +67,7 @@ public abstract class Tester
 	{	
 		this.ensureMethodNameExists();
 		
-		TestStatus status = value ? TestStatus.Passed : TestStatus.Failed;
+		TestStatus status = value ? TestStatus.PASSED : TestStatus.FAILED;
 		
 		this.addTestResult(this.methodName(), status, 
 					TestResult.DESCRIPTION_DEFAULT_VALUE);
@@ -77,7 +77,7 @@ public abstract class Tester
 	{
 		this.ensureMethodNameExists();
 		
-		TestStatus status = value ? TestStatus.Passed : TestStatus.Failed;
+		TestStatus status = value ? TestStatus.PASSED : TestStatus.FAILED;
 		
 		this.addTestResult(this.methodName(), status, description);
 	}
@@ -100,21 +100,28 @@ public abstract class Tester
 	public String toString()
 	{
 		String tabulationString = "- ";
-		String result = this.getClass().getTypeName() + " tests results:" + 
-						GlobalConstants.NEW_LINE;
+		
+		StringBuilder result = new StringBuilder();
+		
+		result.append(this.getClass().getSimpleName());
+		result.append(" test results:");
+		result.append(GlobalConstants.NEW_LINE);
 		
 		for (Map.Entry<String, ArrayList<TestResult>> entry :
 						this.testMethodsAndResultsPairs.entrySet())
 		{
-			result += tabulationString + entry.getKey() + "()" + 
-							GlobalConstants.NEW_LINE;
+			result.append(tabulationString);
+			result.append(entry.getKey());
+			result.append(GlobalConstants.NEW_LINE);
 			
 			for (TestResult testResult : entry.getValue())
-				result += testResult;
+			{
+				result.append(testResult);		
+			}
 			
-			result += GlobalConstants.NEW_LINE;
+			result.append(GlobalConstants.NEW_LINE);
 		}
 		
-		return result;
+		return result.toString();
 	}
 }

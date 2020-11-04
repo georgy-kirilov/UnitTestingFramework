@@ -2,8 +2,8 @@ package enums;
 
 public enum TestStatus 
 {
-	Failed(0),
-	Passed(1);
+	FAILED(0),
+	PASSED(1);
 	
 	private final int value;
 	
